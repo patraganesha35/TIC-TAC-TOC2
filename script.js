@@ -1,8 +1,12 @@
-const boxes=document.querySelectorAll(".box");
-signo=true;
-const message=document.querySelector(".msg")
+let boxes =document .querySelectorAll(".box")
+let msg=document.querySelector(".msg")
+let resetbutton=document.querySelector(".resetbtn")
+let signO=true;
 
-const winvalue=[
+
+
+
+let winner=[
   [0,1,2],
   [3,4,5],
   [6,7,8],
@@ -11,47 +15,85 @@ const winvalue=[
   [1,4,7],
   [2,5,8],
   [2,4,6]
-]
+];
+
 
 boxes.forEach((box)=>{
   box.addEventListener("click",()=>{
-    if(signo){
-      box.innerText="X";
-      signo=false;
+    if(signO){
+      box.innerText="X"
+      signO =false;
+   
     }
-
+    
     else{
       box.innerText="O"
-      signo=true;
+      signO=true;
     }
-           box.style.pointerEvents = "none";
-           checkwinner();
-            
+    box.style.pointerEvents = "none";
+    checkwinner();
+  
 
+  });
 
+}); 
 
-  })
-})
+const disablebox=()=>{
+  for (let box of boxes){
+    box.style.pointerEvents="none";
+
+  }
+}
+
+const enablebox=()=>{
+  for (let box of boxes){
+    box.style.pointerEvents="auto";
+    box.innerText=""
+  }
+}
 
 const checkwinner=()=>{
-  for(pattern of winvalue){
-    value1=boxes[pattern[0]].innerText,
-    value2=boxes[pattern[1]].innerText,
-    value3=boxes[pattern[2]].innerText
+  for(pattern of winner){
+    
+     pos1val= boxes[pattern[0]].innerText,
+     pos2val= boxes[pattern[1]].innerText,
+     pos3val= boxes[pattern[2]].innerText
 
-    if(value1!="" && value2!="" && value3!=""){
-      if(value1==value2 && value2==value3){
-        message.innerText=(value1+" " +"is winner")
-        disablebox()
+     if(pos1val !="" && pos2val !="" && pos3val !=""){
+      if(pos1val==pos2val && pos2val==pos3val){
+        console.log("winner",pos1val)
+        showwinner(pos1val)
+        disablebox();
+       
+
       }
-    }
+     }
+
+
   }
+}
+
+const showwinner=(winner)=>{
+  msg.innerText=`winner is ${winner}`
 
 }
 
-function disablebox(){
-  for(box of boxes){
-    box.style.pointerEvents="none"
-  }
+const resetgame=()=>{
+  signO=true;
+  enablebox();
+  msg.innerText="";
+  
+
 }
+
+resetbutton.addEventListener("click",resetgame)
+
+
+
+
+
+
+
+
+
 
